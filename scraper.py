@@ -7,13 +7,22 @@ import datetime
 
 # Requisitando página inicial
 options = Options()
-options.add_argument('--headless')
-options.add_argument('window-size=600,1200')
+# options.add_argument('--headless')
+options.add_argument('window-size=400,600')
 links= []
 lista_reclamacoes = []
 url_base = 'https://www.reclameaqui.com.br'
+errorlist = []
 
-
+def ultima_pag():
+    navegador = webdriver.Chrome(options=options)
+    sleep(1)
+    navegador.get('https://www.reclameaqui.com.br/empresa/sou-energy/lista-reclamacoes/')
+    sleep(1)
+    s = BeautifulSoup(navegador.page_source, 'html.parser')
+    ult_pag = s.find('div', class_='sc-1sm4sxr-3 eejODo').find('ul', class_='sc-jhGUec eGyFMq').find_all('li')
+    ult_pag = int(ult_pag[-2].text)
+    return ult_pag
 
 def main(x):
     url = f'https://www.reclameaqui.com.br/empresa/sou-energy/lista-reclamacoes/?pagina={x}' 
@@ -69,19 +78,17 @@ def main(x):
 
         
     return lista_reclamacoes
-    
-for x in range(1,16):
-    main(x)
-    
-df = pd.DataFrame(lista_reclamacoes)
-df.to_csv(f'.\data\data-{datetime.date.today()}.csv', index=False) 
-  
-    
-    
-# try:
-#     main()
-#     df = pd.DataFrame(lista_reclamacoes)
-#     df.to_csv(f'.\data\data-{datetime.date.today()}.csv', index=False)
-# except Exception as e:
-#     print(e)
-# print(df_p)
+
+try: 
+    ult_pag = ultima_pag()   
+        
+    for x in range(1,ult_pag+1):
+        main(x)
+        
+    df = pd.DataFrame(lista_reclamacoes)
+    df.to_csv(f'.\data\data-{datetime.date.today()}.csv', index=False) 
+except Exception as e:
+    errorlist.append(f'{e} em {datetime.date.today()}')
+    f = open('logs_error.txt', 'a')
+    f.write(str(errorlist))
+    f.close()
