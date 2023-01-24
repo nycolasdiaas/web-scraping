@@ -1,3 +1,0 @@
-logs_error.txt
-data/
-__pycache__/

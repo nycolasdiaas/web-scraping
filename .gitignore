@@ -1,3 +1,4 @@
 logs_error.txt
 data/
 __pycache__/
+env/
