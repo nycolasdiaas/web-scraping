@@ -92,3 +92,5 @@ except Exception as e:
     f = open('logs_error.txt', 'a')
     f.write(str(errorlist))
     f.close()
+finally:
+    print('done')
