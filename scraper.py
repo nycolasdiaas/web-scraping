@@ -86,9 +86,12 @@ try:
         main(x)
         
     df = pd.DataFrame(lista_reclamacoes)
+    df = df.drop(index=0)
     df.to_csv(f'.\data\data-{datetime.date.today()}.csv', index=False) 
 except Exception as e:
     errorlist.append(f'{e} em {datetime.date.today()}')
     f = open('logs_error.txt', 'a')
     f.write(str(errorlist))
     f.close()
+finally:
+    print('done')
