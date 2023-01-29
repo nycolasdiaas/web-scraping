@@ -9,7 +9,8 @@ conn = psycopg2.connect(
 conn.autocommit = True
 cursor = conn.cursor()
 
-sql = f"""copy dw.reclame_aqui FROM 'C:/Projetos/SELENI~1/data/DATA-{date.today()}.CSV' DELIMITER ',' CSV ENCODING 'UTF8' QUOTE '\"' ESCAPE '''';"""
+sql = f"""copy dw.reclamacoes_sou FROM 'C:/Projetos/SELENI~1/data/DATA-{date.today()}.CSV' DELIMITER ',' CSV ENCODING 'UTF8' QUOTE '\"' ESCAPE '''';"""
+# sql = f"""copy dw.reclamacoes_sou FROM 'C:/Projetos/SELENI~1/data/DATA-2023-01-27.CSV' DELIMITER ',' CSV ENCODING 'UTF8' QUOTE '\"' ESCAPE '''';"""
 
 cursor.execute(sql)
 
