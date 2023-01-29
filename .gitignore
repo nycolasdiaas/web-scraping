@@ -2,3 +2,4 @@ logs_error.txt
 data/
 __pycache__/
 env/
+s3.py
