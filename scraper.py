@@ -94,4 +94,4 @@ except Exception as e:
     f.write(str(errorlist))
     f.close()
 finally:
-    print(f'Done. {datetime.date.today()}')
+    print('done')
